@@ -19,13 +19,19 @@ func GetRisk(ctx *gin.Context) {
 
 	_, err := uuid.Parse(idFromPath)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": constants.ERR_INVALID_RISK_ID})
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": constants.ERR_INVALID_RISK_ID,
+			"error":   err.Error(),
+		})
 		return
 	}
 
 	risk, err := models.GetRiskById(idFromPath)
 	if err != nil {
-		ctx.JSON(http.StatusNotFound, gin.H{"message": constants.ERR_RISK_NOT_FOUND})
+		ctx.JSON(http.StatusNotFound, gin.H{
+			"message": constants.ERR_RISK_NOT_FOUND,
+			"error":   err.Error(),
+		})
 		return
 	}
 
@@ -37,7 +43,10 @@ func CreateRisk(ctx *gin.Context) {
 
 	err := ctx.ShouldBindJSON(&risk)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": constants.ERR_PARSE_REQUEST_BODY, "error": err})
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": constants.ERR_PARSE_REQUEST_BODY,
+			"error":   err.Error(),
+		})
 		return
 	}
 
