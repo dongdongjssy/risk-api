@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/dongdongjssy/risk-api/constants"
 	"github.com/dongdongjssy/risk-api/models"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
@@ -16,7 +17,7 @@ func GetRisks(ctx *gin.Context) {
 func GetRisk(ctx *gin.Context) {
 	_, err := uuid.Parse(ctx.Param("id"))
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse risk id."})
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": constants.ERR_PARSE_RISK_ID})
 		return
 	}
 	ctx.JSON(http.StatusOK, nil)
@@ -27,7 +28,7 @@ func CreateRisk(ctx *gin.Context) {
 
 	err := ctx.ShouldBindJSON(&risk)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request body"})
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": constants.ERR_PARSE_REQUEST_BODY})
 		return
 	}
 
