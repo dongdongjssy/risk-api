@@ -9,14 +9,20 @@ type Risk struct {
 
 var risks = []Risk{}
 
-func (r Risk) Save() {
-	risks = append(risks, r)
+func (risk Risk) Save() {
+	risks = append(risks, risk)
 }
 
 func GetRisks() []Risk {
 	return risks
 }
 
-func GetRiskById(id int64) (*Risk, error) {
+func GetRiskById(id [16]byte) (*Risk, error) {
+	for _, risk := range risks {
+		if risk.ID == id {
+			return &risk, nil
+		}
+	}
+
 	return nil, nil
 }

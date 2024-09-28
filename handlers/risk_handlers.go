@@ -2,18 +2,19 @@ package handlers
 
 import (
 	"net/http"
-	"strconv"
 
 	"github.com/dongdongjssy/risk-api/models"
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 )
 
 func GetRisks(ctx *gin.Context) {
-	ctx.JSON(http.StatusOK, []models.Risk{})
+	risks := models.GetRisks()
+	ctx.JSON(http.StatusOK, risks)
 }
 
 func GetRisk(ctx *gin.Context) {
-	_, err := strconv.ParseInt(ctx.Param("id"), 10, 64)
+	_, err := uuid.Parse(ctx.Param("id"))
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse risk id."})
 		return
@@ -23,11 +24,15 @@ func GetRisk(ctx *gin.Context) {
 
 func CreateRisk(ctx *gin.Context) {
 	var risk models.Risk
+
 	err := ctx.ShouldBindJSON(&risk)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request body"})
 		return
 	}
 
-	ctx.JSON(http.StatusCreated, gin.H{"message": "created"})
+	risk.ID = uuid.New()
+	risk.Save()
+
+	ctx.JSON(http.StatusCreated, risk)
 }
