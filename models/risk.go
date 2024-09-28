@@ -1,7 +1,7 @@
 package models
 
 type Risk struct {
-	ID          [16]byte
+	ID          string
 	State       string `binding:"required"`
 	Title       string `binding:"required"`
 	Description string `binding:"required"`
@@ -17,7 +17,7 @@ func GetRisks() []Risk {
 	return risks
 }
 
-func GetRiskById(id [16]byte) (*Risk, error) {
+func GetRiskById(id string) (*Risk, error) {
 	for _, risk := range risks {
 		if risk.ID == id {
 			return &risk, nil
