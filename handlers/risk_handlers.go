@@ -5,6 +5,7 @@ import (
 
 	"github.com/dongdongjssy/risk-api/constants"
 	"github.com/dongdongjssy/risk-api/models"
+	"github.com/dongdongjssy/risk-api/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -20,17 +21,15 @@ func GetRisk(ctx *gin.Context) {
 	_, err := uuid.Parse(idFromPath)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": constants.ERR_INVALID_RISK_ID,
-			"error":   err.Error(),
+			"message": constants.ERR_API_INVALID_RISK_ID,
 		})
 		return
 	}
 
-	risk, err := models.GetRiskById(idFromPath)
-	if err != nil {
+	risk := models.GetRiskById(idFromPath)
+	if risk == nil {
 		ctx.JSON(http.StatusNotFound, gin.H{
-			"message": constants.ERR_RISK_NOT_FOUND,
-			"error":   err.Error(),
+			"message": constants.ERR_API_RISK_NOT_FOUND,
 		})
 		return
 	}
@@ -44,8 +43,14 @@ func CreateRisk(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&risk)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": constants.ERR_PARSE_REQUEST_BODY,
-			"error":   err.Error(),
+			"message": constants.ERR_API_PARSE_REQUEST_BODY,
+		})
+		return
+	}
+
+	if isValidState := utils.IsValidState(risk.State); !isValidState {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": constants.ERR_API_INVALID_RISK_STATE,
 		})
 		return
 	}

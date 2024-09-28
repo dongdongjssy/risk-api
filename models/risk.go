@@ -1,11 +1,5 @@
 package models
 
-import (
-	"errors"
-
-	"github.com/dongdongjssy/risk-api/constants"
-)
-
 type Risk struct {
 	ID          string
 	State       string `binding:"required"`
@@ -27,12 +21,12 @@ func GetRisks() []Risk {
 }
 
 // find a risk by id in the store
-func GetRiskById(id string) (*Risk, error) {
+func GetRiskById(id string) *Risk {
 	for _, risk := range risks {
 		if risk.ID == id {
-			return &risk, nil
+			return &risk
 		}
 	}
 
-	return nil, errors.New(constants.ERR_RISK_NOT_FOUND)
+	return nil
 }
