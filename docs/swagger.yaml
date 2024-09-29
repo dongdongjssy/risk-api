@@ -22,7 +22,7 @@ info:
   title: Risk APIs
   version: "1.0"
 paths:
-  /risk:
+  /risk/{id}:
     get:
       consumes:
       - application/json

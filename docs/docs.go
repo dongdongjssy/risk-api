@@ -19,7 +19,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/risk": {
+        "/risk/{id}": {
             "get": {
                 "consumes": [
                     "application/json"

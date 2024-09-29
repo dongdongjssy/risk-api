@@ -32,7 +32,7 @@ func GetRisks(ctx *gin.Context) {
 // @Success 200 {object} models.Risk
 // @Failure	400 {string} string "bad request"
 // @Failure	404 {string} string "not found"
-// @Router /risk [get]
+// @Router /risk/{id} [get]
 func GetRisk(ctx *gin.Context) {
 	idFromPath := ctx.Param("id")
 
