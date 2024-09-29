@@ -6,6 +6,12 @@ This project provides 3 apis for risk management:
 - Get a risk by its uuid
 - Create a risk
 
+## Content
+
+- [Getting started](#getting-stared)
+- [Invoke apis](#invoke-apis)
+- [Run auto tests](#run-auto-tests)
+
 ## Getting stared
 
 1. Clone code from this repository `git clone https://github.com/dongdongjssy/risk-api.git`
@@ -16,7 +22,7 @@ This project provides 3 apis for risk management:
 
 you can build the project by running `go build .` under root directory which will generate an executable program based on your operating system in the same folder.
 
-## Call apis
+## Invoke apis
 
 While the server is running, the api docs can be found here: `http://localhost:8080/swagger/index.html#/`, it contains details of each api definition including endpoint url, parameters, and responses etc.
 
