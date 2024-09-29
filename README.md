@@ -57,9 +57,8 @@ go test ./... -cover
 
 It will recursively find all files end with `_test.go` and gives a report of coverage.
 
-The project contains two test files:
+The project contains one test files:
 
-- `validate_state_test.go` unit tests for utils.
 - `risk_handlers_test.go` integration tests for each apis, including both success and failure scenarios.
 
 Following is an example of report after running test:
@@ -71,5 +70,4 @@ Following is an example of report after running test:
         github.com/dongdongjssy/risk-api                coverage: 0.0% of statements
         github.com/dongdongjssy/risk-api/routes         coverage: 0.0% of statements
 ok      github.com/dongdongjssy/risk-api/handlers       0.456s  coverage: 83.3% of statements
-ok      github.com/dongdongjssy/risk-api/utils  (cached)        coverage: 100.0% of statements
 ```
