@@ -1,14 +1,14 @@
 package handlers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/dongdongjssy/risk-api/constants"
 	"github.com/dongdongjssy/risk-api/models"
+	"github.com/dongdongjssy/risk-api/utils"
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
+	"github.com/go-playground/validator"
 	"github.com/google/uuid"
 )
 
@@ -41,17 +41,16 @@ func GetRisk(ctx *gin.Context) {
 
 	// validate uuid from request
 	if _, err := uuid.Parse(idFromPath); err != nil {
-		ctx.JSON(http.StatusBadRequest, constants.ERR_API_INVALID_RISK_ID)
-		log.Println("GetRisk - ", constants.ERR_API_INVALID_RISK_ID)
-		log.Panic("GetRisk - ", err.Error())
+		ctx.JSON(http.StatusBadRequest, []string{constants.ERR_API_INVALID_RISK_ID})
+		log.Println(utils.FormatLog("GetRisk", err.Error()))
 		return
 	}
 
 	// search from store
 	risk := models.GetRiskById(idFromPath)
 	if risk == nil {
-		ctx.JSON(http.StatusNotFound, constants.ERR_API_RISK_NOT_FOUND)
-		log.Println("GetRisk - ", constants.ERR_API_RISK_NOT_FOUND)
+		ctx.JSON(http.StatusNotFound, []string{constants.ERR_API_RISK_NOT_FOUND})
+		log.Println(utils.FormatLog("GetRisk", constants.ERR_API_RISK_NOT_FOUND))
 		return
 	}
 
@@ -73,22 +72,24 @@ func CreateRisk(ctx *gin.Context) {
 
 	// parse request body
 	if err := ctx.ShouldBindJSON(&risk); err != nil {
-		ctx.JSON(http.StatusBadRequest, constants.ERR_API_PARSE_REQUEST_BODY)
-		log.Panic("CreateRisk - ", err.Error())
+		errMsgs := utils.ParseValidationErr(&err)
+		ctx.JSON(http.StatusBadRequest, errMsgs)
+		log.Println(utils.FormatLog("CreateRisk", errMsgs))
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(risk); err != nil {
-		errors := err.(validator.ValidationErrors)
-		ctx.JSON(http.StatusBadRequest, fmt.Sprintf("%s", errors))
+		errMsgs := utils.ParseValidationErr(&err)
+		ctx.JSON(http.StatusBadRequest, errMsgs)
+		log.Println(utils.FormatLog("CreateRisk", errMsgs))
 		return
 	}
 
 	// save risk to store
 	if err := risk.Save(); err != nil {
-		ctx.JSON(http.StatusBadRequest, err.Error())
-		log.Panic("CreateRisk - ", err.Error())
+		ctx.JSON(http.StatusBadRequest, []string{err.Error()})
+		log.Println(utils.FormatLog("CreateRisk", err.Error()))
 		return
 	}
 

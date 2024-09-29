@@ -127,6 +127,12 @@ func TestPostRisksHandler(t *testing.T) {
 
 		// verify response code
 		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
+		assert.Equal(
+			t,
+			"[\"Risk.State value must be one of [open closed accepted investigating]\"]",
+			rec.Body.String(),
+			"incorrect error message",
+		)
 	})
 
 	t.Run("it returns 400 with missing risk title", func(t *testing.T) {
@@ -144,6 +150,35 @@ func TestPostRisksHandler(t *testing.T) {
 
 		// verify response code
 		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
+		assert.Equal(
+			t,
+			"[\"Risk.Title is required\"]",
+			rec.Body.String(),
+			"incorrect error message",
+		)
+	})
+
+	t.Run("it returns 400 with missing risk state", func(t *testing.T) {
+		// build a valid risk
+		expectedRisk := models.Risk{
+			Title:       "Risk B",
+			Description: "Risk A",
+		}
+		riskJson, _ := json.Marshal(expectedRisk)
+
+		// send a POST risks request
+		rec := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodPost, constants.ENDPOINT_POST_RISKS, strings.NewReader(string(riskJson)))
+		server.ServeHTTP(rec, req)
+
+		// verify response code
+		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
+		assert.Equal(
+			t,
+			"[\"Risk.State is required\"]",
+			rec.Body.String(),
+			"incorrect error message",
+		)
 	})
 
 	t.Run("it returns 400 with duplicated risk title", func(t *testing.T) {
@@ -162,6 +197,41 @@ func TestPostRisksHandler(t *testing.T) {
 
 		// verify response code
 		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
+		assert.Equal(
+			t,
+			"[\"duplicate risk title, please choose another title\"]",
+			rec.Body.String(),
+			"incorrect error message",
+		)
+	})
+
+	t.Run("it returns 400 with risk title exceeds max length of 128", func(t *testing.T) {
+		// build a valid risk
+		var longTitle = make([]byte, 129)
+		for i := range 129 {
+			longTitle[i] = 'a'
+		}
+
+		expectedRisk := models.Risk{
+			State:       "accepted",
+			Title:       string(longTitle),
+			Description: "Risk A",
+		}
+		riskJson, _ := json.Marshal(expectedRisk)
+
+		// send a POST risks request
+		rec := httptest.NewRecorder()
+		req, _ := http.NewRequest(http.MethodPost, constants.ENDPOINT_POST_RISKS, strings.NewReader(string(riskJson)))
+		server.ServeHTTP(rec, req)
+
+		// verify response code
+		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
+		assert.Equal(
+			t,
+			"[\"Risk.Title exceeds the max length of 128\"]",
+			rec.Body.String(),
+			"incorrect error message",
+		)
 	})
 }
 
