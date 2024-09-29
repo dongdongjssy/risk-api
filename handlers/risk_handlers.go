@@ -5,7 +5,6 @@ import (
 
 	"github.com/dongdongjssy/risk-api/constants"
 	"github.com/dongdongjssy/risk-api/models"
-	"github.com/dongdongjssy/risk-api/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
 )
@@ -48,15 +47,14 @@ func CreateRisk(ctx *gin.Context) {
 		return
 	}
 
-	if isValidState := utils.IsValidState(risk.State); !isValidState {
+	risk.ID = uuid.New().String()
+	err = risk.Save()
+	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": constants.ERR_API_INVALID_RISK_STATE,
+			"message": err.Error(),
 		})
 		return
 	}
-
-	risk.ID = uuid.New().String()
-	risk.Save()
 
 	ctx.JSON(http.StatusCreated, risk)
 }
