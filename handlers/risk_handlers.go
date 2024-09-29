@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/dongdongjssy/risk-api/constants"
@@ -38,12 +39,15 @@ func GetRisk(ctx *gin.Context) {
 
 	if _, err := uuid.Parse(idFromPath); err != nil {
 		ctx.JSON(http.StatusBadRequest, constants.ERR_API_INVALID_RISK_ID)
+		log.Println("GetRisk - ", constants.ERR_API_INVALID_RISK_ID)
+		log.Panic("GetRisk - ", err.Error())
 		return
 	}
 
 	risk := models.GetRiskById(idFromPath)
 	if risk == nil {
 		ctx.JSON(http.StatusNotFound, constants.ERR_API_RISK_NOT_FOUND)
+		log.Println("GetRisk - ", constants.ERR_API_RISK_NOT_FOUND)
 		return
 	}
 
@@ -65,11 +69,13 @@ func CreateRisk(ctx *gin.Context) {
 
 	if err := ctx.ShouldBindJSON(&risk); err != nil {
 		ctx.JSON(http.StatusBadRequest, constants.ERR_API_PARSE_REQUEST_BODY)
+		log.Panic("CreateRisk - ", err.Error())
 		return
 	}
 
 	if err := risk.Save(); err != nil {
 		ctx.JSON(http.StatusBadRequest, err.Error())
+		log.Panic("CreateRisk - ", err.Error())
 		return
 	}
 
