@@ -4,15 +4,14 @@ import (
 	"errors"
 
 	"github.com/dongdongjssy/risk-api/constants"
-	"github.com/dongdongjssy/risk-api/utils"
 	"github.com/google/uuid"
 )
 
 // define risk structure
 type Risk struct {
 	ID          string `json:"id"`
-	State       string `json:"state" binding:"required" validate:"oneof=open closed accepted investigating"`
-	Title       string `json:"title" binding:"required" validate:"max=128"`
+	State       string `json:"state" validate:"required,oneof=open closed accepted investigating"`
+	Title       string `json:"title" validate:"required,max=128"`
 	Description string `json:"description" validate:"max=500"`
 }
 
@@ -21,11 +20,6 @@ var risks = []Risk{}
 
 // save one risk into store
 func (risk *Risk) Save() error {
-	// validate state
-	if isValidState := utils.IsValidState(risk.State); !isValidState {
-		return errors.New(constants.ERR_API_INVALID_RISK_STATE)
-	}
-
 	// validate title duplication
 	for _, r := range risks {
 		if r.Title == risk.Title {
