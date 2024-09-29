@@ -31,9 +31,33 @@ const docTemplate = `{
                     "Risk"
                 ],
                 "summary": "get a risk by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "risk uuid",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Risk"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "not found",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 }
             }
@@ -52,7 +76,13 @@ const docTemplate = `{
                 "summary": "get a list of risks",
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Risk"
+                            }
+                        }
                     }
                 }
             },
@@ -67,10 +97,53 @@ const docTemplate = `{
                     "Risk"
                 ],
                 "summary": "create a risk",
+                "parameters": [
+                    {
+                        "description": "a new risk (without id)",
+                        "name": "risk",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Risk"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "new created risk with uuid",
+                        "schema": {
+                            "$ref": "#/definitions/models.Risk"
+                        }
+                    },
+                    "400": {
+                        "description": "bad request",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Risk": {
+            "type": "object",
+            "required": [
+                "state",
+                "title"
+            ],
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
                 }
             }
         }

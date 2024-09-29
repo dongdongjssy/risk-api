@@ -1,4 +1,19 @@
 basePath: /v1
+definitions:
+  models.Risk:
+    properties:
+      description:
+        type: string
+      id:
+        type: string
+      state:
+        type: string
+      title:
+        type: string
+    required:
+    - state
+    - title
+    type: object
 info:
   contact: {}
   license:
@@ -11,11 +26,27 @@ paths:
     get:
       consumes:
       - application/json
+      parameters:
+      - description: risk uuid
+        in: query
+        name: id
+        required: true
+        type: string
       produces:
       - application/json
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/models.Risk'
+        "400":
+          description: bad request
+          schema:
+            type: string
+        "404":
+          description: not found
+          schema:
+            type: string
       summary: get a risk by id
       tags:
       - Risk
@@ -28,17 +59,34 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Risk'
+            type: array
       summary: get a list of risks
       tags:
       - Risk
     post:
       consumes:
       - application/json
+      parameters:
+      - description: a new risk (without id)
+        in: body
+        name: risk
+        required: true
+        schema:
+          $ref: '#/definitions/models.Risk'
       produces:
       - application/json
       responses:
         "200":
-          description: OK
+          description: new created risk with uuid
+          schema:
+            $ref: '#/definitions/models.Risk'
+        "400":
+          description: bad request
+          schema:
+            type: string
       summary: create a risk
       tags:
       - Risk

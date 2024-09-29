@@ -12,9 +12,9 @@ import (
 // GetRisks get a list of risks
 // @Summary get a list of risks
 // @Tags Risk
-// @Accept application/json
-// @Produce application/json
-// @Success 200
+// @Accept json
+// @Produce json
+// @Success 200 {array} models.Risk
 // @Router /risks [get]
 func GetRisks(ctx *gin.Context) {
 	risks := models.GetRisks()
@@ -24,9 +24,12 @@ func GetRisks(ctx *gin.Context) {
 // GetRisk get a risk by id
 // @Summary get a risk by id
 // @Tags Risk
-// @Accept application/json
-// @Produce application/json
-// @Success 200
+// @Accept json
+// @Produce json
+// @Param id query string true "risk uuid"
+// @Success 200 {object} models.Risk
+// @Failure	400 {string} string "bad request"
+// @Failure	404 {string} string "not found"
 // @Router /risk [get]
 func GetRisk(ctx *gin.Context) {
 	idFromPath := ctx.Param("id")
@@ -52,9 +55,11 @@ func GetRisk(ctx *gin.Context) {
 // CreateRisk create a risk
 // @Summary create a risk
 // @Tags Risk
-// @Accept application/json
-// @Produce application/json
-// @Success 200
+// @Accept json
+// @Produce json
+// @Param risk body models.Risk true "a new risk (without id)"
+// @Success 200 {object} models.Risk "new created risk with uuid"
+// @Failure	400 {string} string "bad request"
 // @Router /risks [post]
 func CreateRisk(ctx *gin.Context) {
 	var risk models.Risk
