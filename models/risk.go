@@ -19,7 +19,7 @@ type Risk struct {
 var risks = []Risk{}
 
 // save one risk into store
-func (risk Risk) Save() error {
+func (risk *Risk) Save() error {
 	// validate state
 	if isValidState := utils.IsValidState(risk.State); !isValidState {
 		return errors.New(constants.ERR_API_INVALID_RISK_STATE)
@@ -33,7 +33,7 @@ func (risk Risk) Save() error {
 	}
 
 	risk.ID = uuid.New().String()
-	risks = append(risks, risk)
+	risks = append(risks, *risk)
 	return nil
 }
 
