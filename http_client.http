@@ -1,0 +1,19 @@
+# get a list of risks
+GET http://localhost:8080/v1/risks
+
+
+###
+# get a risk by uuid
+GET http://localhost:8080/v1/risk/<replace with uuid>
+
+
+###
+# create a risk
+POST http://localhost:8080/v1/risks
+Content-Type: application/json
+
+{
+    "state": "open",
+    "title": "a risk",
+    "description": "a risk"
+}
