@@ -18,12 +18,13 @@ you can build the project by running `go build .` under root directory which wil
 
 ### Call apis
 
-While the server is running, the api docs can be found here: `http://localhost:8080/swagger/index.html#/`, it contains details of each api definition including endpoint, parameters, and responses etc.
+While the server is running, the api docs can be found here: `http://localhost:8080/swagger/index.html#/`, it contains details of each api definition including endpoint url, parameters, and responses etc.
 
 Options to call apis:
 
 1. There is a `http_client.http` file in root folder, you can send requests inside this file when you have [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension installed in vs code.
-2. Use curl from command line, e.g.
+2. In [Swagger UI](http://localhost:8080/swagger/index.html#/)
+3. Use curl from command line, e.g.
 
 - get risks:
   ```sh
@@ -37,6 +38,8 @@ Options to call apis:
   ```sh
   curl --json '{"state":"open","title":"some risk","description":"some risk"}' localhost:8080/v1/risks
   ```
+
+4. Other api test tools like postman etc.
 
 ### Run auto tests
 
