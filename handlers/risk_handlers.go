@@ -47,7 +47,6 @@ func CreateRisk(ctx *gin.Context) {
 		return
 	}
 
-	risk.ID = uuid.New().String()
 	err = risk.Save()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{

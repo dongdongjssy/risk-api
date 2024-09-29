@@ -5,6 +5,7 @@ import (
 
 	"github.com/dongdongjssy/risk-api/constants"
 	"github.com/dongdongjssy/risk-api/utils"
+	"github.com/google/uuid"
 )
 
 type Risk struct {
@@ -31,6 +32,7 @@ func (risk Risk) Save() error {
 		}
 	}
 
+	risk.ID = uuid.New().String()
 	risks = append(risks, risk)
 	return nil
 }
