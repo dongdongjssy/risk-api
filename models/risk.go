@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// define risk structure
 type Risk struct {
 	ID          string `json:"id"`
 	State       string `json:"state" binding:"required"`
@@ -25,13 +26,14 @@ func (risk *Risk) Save() error {
 		return errors.New(constants.ERR_API_INVALID_RISK_STATE)
 	}
 
-	// title duplication check
+	// validate title duplication
 	for _, r := range risks {
 		if r.Title == risk.Title {
 			return errors.New(constants.ERR_API_RISK_DUPLICATE_TITLE)
 		}
 	}
 
+	// generate a random uuid and save it to array
 	risk.ID = uuid.New().String()
 	risks = append(risks, *risk)
 	return nil

@@ -10,8 +10,10 @@ import (
 )
 
 func RegisterRiskRoutes(server *gin.Engine) {
+	// register swagger ui path
 	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
+	// register risk api endpoints
 	server.GET(constants.ENDPOINT_GET_RISKS, handlers.GetRisks)
 	server.GET(constants.ENDPOINT_GET_RISK, handlers.GetRisk)
 	server.POST(constants.ENDPOINT_POST_RISKS, handlers.CreateRisk)
