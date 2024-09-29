@@ -16,7 +16,7 @@ This project provides 3 apis for risk management:
 
 you can build the project by running `go build .` under root directory which will generate an executable program based on your operating system in the same folder.
 
-### Call apis
+## Call apis
 
 While the server is running, the api docs can be found here: `http://localhost:8080/swagger/index.html#/`, it contains details of each api definition including endpoint url, parameters, and responses etc.
 
@@ -41,7 +41,7 @@ Options to call apis:
 
 4. Other api test tools like postman etc.
 
-### Run auto tests
+## Run auto tests
 
 To run tests, in root folder run command:
 
@@ -55,3 +55,15 @@ The project contains two test files:
 
 - `validate_state_test.go` unit tests for utils.
 - `risk_handlers_test.go` integration tests for each apis, including both success and failure scenarios.
+
+Following is an example of report after running test:
+
+```
+?       github.com/dongdongjssy/risk-api/constants      [no test files]
+        github.com/dongdongjssy/risk-api/docs           coverage: 0.0% of statements
+        github.com/dongdongjssy/risk-api/models         coverage: 0.0% of statements
+        github.com/dongdongjssy/risk-api                coverage: 0.0% of statements
+        github.com/dongdongjssy/risk-api/routes         coverage: 0.0% of statements
+ok      github.com/dongdongjssy/risk-api/handlers       0.456s  coverage: 83.3% of statements
+ok      github.com/dongdongjssy/risk-api/utils  (cached)        coverage: 100.0% of statements
+```
