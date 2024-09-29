@@ -11,9 +11,9 @@ import (
 // define risk structure
 type Risk struct {
 	ID          string `json:"id"`
-	State       string `json:"state" binding:"required"`
-	Title       string `json:"title" binding:"required"`
-	Description string `json:"description"`
+	State       string `json:"state" binding:"required" validate:"oneof=open closed accepted investigating"`
+	Title       string `json:"title" binding:"required" validate:"max=128"`
+	Description string `json:"description" validate:"max=500"`
 }
 
 // use in-memory array to store all risks

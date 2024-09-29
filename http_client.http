@@ -13,7 +13,7 @@ POST http://localhost:8080/v1/risks
 Content-Type: application/json
 
 {
-    "state": "open",
-    "title": "a risk",
+    "state": "opened",
+    "title": "aaaaaaaaaabbbbbbbbbbccccccccccaaaaaaaaaabbbbbbbbbbccccccccccaaaaaaaaaabbbbbbbbbbccccccccccaaaaaaaaaabbbbbbbbbbccccccccccaaaaaaaaaabbbbbbbbbbcccccccccc",
     "description": "a risk"
 }

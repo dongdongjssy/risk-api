@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/dongdongjssy/risk-api/constants"
 	"github.com/dongdongjssy/risk-api/models"
 	"github.com/gin-gonic/gin"
+	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 )
 
@@ -73,6 +75,13 @@ func CreateRisk(ctx *gin.Context) {
 	if err := ctx.ShouldBindJSON(&risk); err != nil {
 		ctx.JSON(http.StatusBadRequest, constants.ERR_API_PARSE_REQUEST_BODY)
 		log.Panic("CreateRisk - ", err.Error())
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(risk); err != nil {
+		errors := err.(validator.ValidationErrors)
+		ctx.JSON(http.StatusBadRequest, fmt.Sprintf("%s", errors))
 		return
 	}
 
