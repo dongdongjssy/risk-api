@@ -10,6 +10,7 @@ import (
 )
 
 // GetRisks get a list of risks
+//
 // @Summary get a list of risks
 // @Tags Risk
 // @Accept json
@@ -22,6 +23,7 @@ func GetRisks(ctx *gin.Context) {
 }
 
 // GetRisk get a risk by id
+//
 // @Summary get a risk by id
 // @Tags Risk
 // @Accept json
@@ -35,17 +37,13 @@ func GetRisk(ctx *gin.Context) {
 	idFromPath := ctx.Param("id")
 
 	if _, err := uuid.Parse(idFromPath); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": constants.ERR_API_INVALID_RISK_ID,
-		})
+		ctx.JSON(http.StatusBadRequest, constants.ERR_API_INVALID_RISK_ID)
 		return
 	}
 
 	risk := models.GetRiskById(idFromPath)
 	if risk == nil {
-		ctx.JSON(http.StatusNotFound, gin.H{
-			"message": constants.ERR_API_RISK_NOT_FOUND,
-		})
+		ctx.JSON(http.StatusNotFound, constants.ERR_API_RISK_NOT_FOUND)
 		return
 	}
 
@@ -53,6 +51,7 @@ func GetRisk(ctx *gin.Context) {
 }
 
 // CreateRisk create a risk
+//
 // @Summary create a risk
 // @Tags Risk
 // @Accept json
@@ -65,16 +64,12 @@ func CreateRisk(ctx *gin.Context) {
 	var risk models.Risk
 
 	if err := ctx.ShouldBindJSON(&risk); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": constants.ERR_API_PARSE_REQUEST_BODY,
-		})
+		ctx.JSON(http.StatusBadRequest, constants.ERR_API_PARSE_REQUEST_BODY)
 		return
 	}
 
 	if err := risk.Save(); err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{
-			"message": err.Error(),
-		})
+		ctx.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
