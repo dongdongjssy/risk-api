@@ -12,3 +12,4 @@ There are some improvements can be done in the future:
 2. Risk state is stored as string, if risks amount is huge, need to change the type to small int to save storing spaces.
 3. It uses Gin's build-in logging which should be replaced with other customized tool, also thinking of redirecting logs to a local file while service is deployed in a cluster as a pod.
 4. No authentication for apis, will need to add a middleware service to do it.
+5. Create a DockerFile to build the service into image so it can be easily deployed to cluster as microservices.
