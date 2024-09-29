@@ -1,0 +1,45 @@
+basePath: /v1
+info:
+  contact: {}
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Risk APIs
+  version: "1.0"
+paths:
+  /risk:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: get a risk by id
+      tags:
+      - Risk
+  /risks:
+    get:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: get a list of risks
+      tags:
+      - Risk
+    post:
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: create a risk
+      tags:
+      - Risk
+swagger: "2.0"

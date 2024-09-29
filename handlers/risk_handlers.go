@@ -9,11 +9,25 @@ import (
 	"github.com/google/uuid"
 )
 
+// GetRisks get a list of risks
+// @Summary get a list of risks
+// @Tags Risk
+// @Accept application/json
+// @Produce application/json
+// @Success 200
+// @Router /risks [get]
 func GetRisks(ctx *gin.Context) {
 	risks := models.GetRisks()
 	ctx.JSON(http.StatusOK, risks)
 }
 
+// GetRisk get a risk by id
+// @Summary get a risk by id
+// @Tags Risk
+// @Accept application/json
+// @Produce application/json
+// @Success 200
+// @Router /risk [get]
 func GetRisk(ctx *gin.Context) {
 	idFromPath := ctx.Param("id")
 
@@ -35,6 +49,13 @@ func GetRisk(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, risk)
 }
 
+// CreateRisk create a risk
+// @Summary create a risk
+// @Tags Risk
+// @Accept application/json
+// @Produce application/json
+// @Success 200
+// @Router /risks [post]
 func CreateRisk(ctx *gin.Context) {
 	var risk models.Risk
 
