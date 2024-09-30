@@ -23,7 +23,7 @@ func (risk *Risk) Save() error {
 	// validate title duplication
 	for _, r := range risks {
 		if r.Title == risk.Title {
-			return errors.New(constants.ERR_API_RISK_DUPLICATE_TITLE)
+			return errors.New(constants.ERR_MSG_DUPLICATE_RISK_TITLE)
 		}
 	}
 

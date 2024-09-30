@@ -57,7 +57,7 @@ func GetRisk(ctx *gin.Context) {
 
 	// validate uuid from request
 	if _, err := uuid.Parse(idFromPath); err != nil {
-		ctx.JSON(http.StatusBadRequest, []string{constants.ERR_API_INVALID_RISK_ID})
+		ctx.JSON(http.StatusBadRequest, []string{constants.ERR_MSG_INVALID_RISK_ID})
 		log.Println(utils.FormatLog("GetRisk", err.Error()))
 		return
 	}
@@ -65,8 +65,8 @@ func GetRisk(ctx *gin.Context) {
 	// search from store
 	risk := models.GetRiskById(idFromPath)
 	if risk == nil {
-		ctx.JSON(http.StatusNotFound, []string{constants.ERR_API_RISK_NOT_FOUND})
-		log.Println(utils.FormatLog("GetRisk", constants.ERR_API_RISK_NOT_FOUND))
+		ctx.JSON(http.StatusNotFound, []string{constants.ERR_MSG_RISK_NOT_FOUND})
+		log.Println(utils.FormatLog("GetRisk", constants.ERR_MSG_RISK_NOT_FOUND))
 		return
 	}
 
