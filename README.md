@@ -2,9 +2,11 @@
 
 This project provides 3 apis for risk management:
 
-- Get a list of risks
-- Get a risk by its uuid
-- Create a risk
+| Method | Endpoint      | Description         |
+| ------ | ------------- | ------------------- |
+| GET    | /v1/risk/{id} | get a risk by id    |
+| GET    | /v1/risks     | get a list of risks |
+| POST   | /v1/risks     | create a risk       |
 
 ## Content
 
@@ -24,7 +26,7 @@ you can build the project by running `go build .` under root directory which wil
 
 ## Invoke apis
 
-While the server is running, the api docs can be found here: `http://localhost:8080/swagger/index.html#/`, it contains details of each api definition including endpoint url, parameters, and responses etc.
+While the server is running, the api docs can be found here: [Swagger docs](http://localhost:8080/swagger/index.html#/), it contains details of each api definition including endpoint url, parameters, and responses etc.
 
 Options to call apis:
 
