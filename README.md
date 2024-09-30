@@ -44,7 +44,7 @@ Options to call apis:
   ```
 - create a risk:
   ```sh
-  curl --json '{"state":"open","title":"some risk","description":"some risk"}' localhost:8080/v1/risks
+  curl -X POST -d '{"state":"open","title":"some risk","description":"some risk"}' localhost:8080/v1/risks --header "Content-Type:application/json"
   ```
 
 4. Other api test tools like postman etc.
