@@ -24,7 +24,7 @@ import (
 func GetRisks(ctx *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
+			ctx.JSON(http.StatusInternalServerError, constants.ERR_API_INTERNAL_SERVER_ERROR)
 			return
 		}
 	}()
@@ -48,7 +48,7 @@ func GetRisks(ctx *gin.Context) {
 func GetRisk(ctx *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
+			ctx.JSON(http.StatusInternalServerError, constants.ERR_API_INTERNAL_SERVER_ERROR)
 			return
 		}
 	}()
@@ -57,7 +57,7 @@ func GetRisk(ctx *gin.Context) {
 
 	// validate uuid from request
 	if _, err := uuid.Parse(idFromPath); err != nil {
-		ctx.JSON(http.StatusBadRequest, []string{constants.ERR_MSG_INVALID_RISK_ID})
+		ctx.JSON(http.StatusBadRequest, constants.ERR_API_INVALID_RISK_ID)
 		log.Println(utils.FormatLog("GetRisk", err.Error()))
 		return
 	}
@@ -65,8 +65,8 @@ func GetRisk(ctx *gin.Context) {
 	// search from store
 	risk := models.GetRiskById(idFromPath)
 	if risk == nil {
-		ctx.JSON(http.StatusNotFound, []string{constants.ERR_MSG_RISK_NOT_FOUND})
-		log.Println(utils.FormatLog("GetRisk", constants.ERR_MSG_RISK_NOT_FOUND))
+		ctx.JSON(http.StatusNotFound, constants.ERR_API_RISK_NOT_FOUND)
+		log.Println(utils.FormatLog("GetRisk", constants.ERR_API_RISK_NOT_FOUND))
 		return
 	}
 
@@ -87,14 +87,16 @@ func GetRisk(ctx *gin.Context) {
 func CreateRisk(ctx *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
+			ctx.JSON(http.StatusInternalServerError, constants.ERR_API_INTERNAL_SERVER_ERROR)
 			return
 		}
 	}()
 
+	// parse request body
 	var risk models.Risk
+	ctx.ShouldBindJSON(&risk)
 
-	// parse request body and do validation
+	// do validation
 	validate := validator.New()
 	if err := validate.Struct(risk); err != nil {
 		errMsgs := utils.ParseValidationErr(&err)
@@ -105,7 +107,7 @@ func CreateRisk(ctx *gin.Context) {
 
 	// save risk to store
 	if err := risk.Save(); err != nil {
-		ctx.JSON(http.StatusBadRequest, []string{err.Error()})
+		ctx.JSON(http.StatusBadRequest, err.Error())
 		log.Println(utils.FormatLog("CreateRisk", err.Error()))
 		return
 	}

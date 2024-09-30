@@ -9,7 +9,8 @@ const (
 	ERR_LENGTH_OUT_OF_RANGE    = "ERR_LENGTH_OUT_OF_RANGE"
 
 	// Error messages
-	ERR_MSG_INVALID_RISK_ID      = "risk id is not a valid UUID"
-	ERR_MSG_RISK_NOT_FOUND       = "risk not found"
-	ERR_MSG_DUPLICATE_RISK_TITLE = "duplicate risk title, please choose another title"
+	ERR_MSG_INVALID_RISK_ID       = "risk id is not a valid UUID"
+	ERR_MSG_RISK_NOT_FOUND        = "risk not found"
+	ERR_MSG_DUPLICATE_RISK_TITLE  = "duplicate risk title, please choose another title"
+	ERR_MSG_INTERNAL_SERVER_ERROR = "internal server error"
 )

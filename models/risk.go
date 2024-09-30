@@ -12,7 +12,7 @@ type Risk struct {
 	ID          string `json:"id"`
 	State       string `json:"state" validate:"required,oneof=open closed accepted investigating"`
 	Title       string `json:"title" validate:"required,max=128"`
-	Description string `json:"description" validate:"max=500"`
+	Description string `json:"description" validate:"max=1000"`
 }
 
 // use in-memory array to store all risks

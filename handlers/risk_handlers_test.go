@@ -129,7 +129,7 @@ func TestPostRisksHandler(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
 		assert.Equal(
 			t,
-			"[\"Risk.State value must be one of [open closed accepted investigating]\"]",
+			"\"Risk.State value must be one of [open closed accepted investigating]\"",
 			rec.Body.String(),
 			"incorrect error message",
 		)
@@ -152,7 +152,7 @@ func TestPostRisksHandler(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
 		assert.Equal(
 			t,
-			"[\"Risk.Title is required\"]",
+			"\"Risk.Title is required\"",
 			rec.Body.String(),
 			"incorrect error message",
 		)
@@ -175,7 +175,7 @@ func TestPostRisksHandler(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
 		assert.Equal(
 			t,
-			"[\"Risk.State is required\"]",
+			"\"Risk.State is required\"",
 			rec.Body.String(),
 			"incorrect error message",
 		)
@@ -199,7 +199,7 @@ func TestPostRisksHandler(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
 		assert.Equal(
 			t,
-			"[\"duplicate risk title, please choose another title\"]",
+			"\"duplicate risk title, please choose another title\"",
 			rec.Body.String(),
 			"incorrect error message",
 		)
@@ -228,7 +228,7 @@ func TestPostRisksHandler(t *testing.T) {
 		assert.Equal(t, http.StatusBadRequest, rec.Code, "should response 400 code")
 		assert.Equal(
 			t,
-			"[\"Risk.Title exceeds the max length of 128\"]",
+			"\"Risk.Title exceeds the max length of 128\"",
 			rec.Body.String(),
 			"incorrect error message",
 		)
