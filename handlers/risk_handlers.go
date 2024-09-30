@@ -24,7 +24,7 @@ import (
 func GetRisks(ctx *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
+			ctx.JSON(http.StatusInternalServerError, constants.ERR_API_INTERNAL_SERVER_ERROR)
 			return
 		}
 	}()
@@ -48,7 +48,7 @@ func GetRisks(ctx *gin.Context) {
 func GetRisk(ctx *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
+			ctx.JSON(http.StatusInternalServerError, constants.ERR_API_INTERNAL_SERVER_ERROR)
 			return
 		}
 	}()
@@ -87,14 +87,16 @@ func GetRisk(ctx *gin.Context) {
 func CreateRisk(ctx *gin.Context) {
 	defer func() {
 		if err := recover(); err != nil {
-			ctx.JSON(http.StatusInternalServerError, err)
+			ctx.JSON(http.StatusInternalServerError, constants.ERR_API_INTERNAL_SERVER_ERROR)
 			return
 		}
 	}()
 
+	// parse request body
 	var risk models.Risk
+	ctx.ShouldBindJSON(&risk)
 
-	// parse request body and do validation
+	// do validation
 	validate := validator.New()
 	if err := validate.Struct(risk); err != nil {
 		errMsgs := utils.ParseValidationErr(&err)

@@ -15,8 +15,8 @@ import (
 //  3. max
 func ParseValidationErr(err *error) *[]string {
 	errors := (*err).(validator.ValidationErrors)
-	var errMsgs = make([]string, len(errors))
 
+	var errMsgs = make([]string, len(errors))
 	for i, error := range errors {
 		switch error.Tag() {
 		case "required":
