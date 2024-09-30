@@ -2,6 +2,7 @@ package utils
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/go-playground/validator"
@@ -13,7 +14,7 @@ import (
 //  1. required
 //  2. oneof
 //  3. max
-func ParseValidationErr(err *error) *[]string {
+func ParseValidationErr(err *error) string {
 	errors := (*err).(validator.ValidationErrors)
 
 	var errMsgs = make([]string, len(errors))
@@ -28,7 +29,7 @@ func ParseValidationErr(err *error) *[]string {
 		}
 	}
 
-	return &errMsgs
+	return strings.Join(errMsgs[:], ", ")
 }
 
 // simplify format of log output, should use other logger libraries that provide
