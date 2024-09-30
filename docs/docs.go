@@ -58,6 +58,12 @@ const docTemplate = `{
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 }
             }
@@ -82,6 +88,12 @@ const docTemplate = `{
                             "items": {
                                 "$ref": "#/definitions/models.Risk"
                             }
+                        }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -120,6 +132,12 @@ const docTemplate = `{
                         "schema": {
                             "type": "string"
                         }
+                    },
+                    "500": {
+                        "description": "internal server error",
+                        "schema": {
+                            "type": "string"
+                        }
                     }
                 }
             }
@@ -134,16 +152,24 @@ const docTemplate = `{
             ],
             "properties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 500
                 },
                 "id": {
                     "type": "string"
                 },
                 "state": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "open",
+                        "closed",
+                        "accepted",
+                        "investigating"
+                    ]
                 },
                 "title": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 128
                 }
             }
         }

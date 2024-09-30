@@ -3,12 +3,19 @@ definitions:
   models.Risk:
     properties:
       description:
+        maxLength: 500
         type: string
       id:
         type: string
       state:
+        enum:
+        - open
+        - closed
+        - accepted
+        - investigating
         type: string
       title:
+        maxLength: 128
         type: string
     required:
     - state
@@ -47,6 +54,10 @@ paths:
           description: not found
           schema:
             type: string
+        "500":
+          description: internal server error
+          schema:
+            type: string
       summary: get a risk by id
       tags:
       - Risk
@@ -63,6 +74,10 @@ paths:
             items:
               $ref: '#/definitions/models.Risk'
             type: array
+        "500":
+          description: internal server error
+          schema:
+            type: string
       summary: get a list of risks
       tags:
       - Risk
@@ -85,6 +100,10 @@ paths:
             $ref: '#/definitions/models.Risk'
         "400":
           description: bad request
+          schema:
+            type: string
+        "500":
+          description: internal server error
           schema:
             type: string
       summary: create a risk
