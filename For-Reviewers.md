@@ -2,7 +2,7 @@ This project uses the following frameworks and libraries to assist development:
 
 - gin: [https://github.com/gin-gonic/gin](https://github.com/gin-gonic/gin)
 - uuid: [http://pkg.go.dev/github.com/google/uuid](http://pkg.go.dev/github.com/google/uuid)
-- swagger: [https://github.com/swaggo/gin-swagger](https://github.com/swaggo/gin-swagger)
+- swagger: [https://github.com/swaggo/gin-swagger](https://github.com/swaggo/gin-swagger): it generates /docs based on comments in handlers and main.go
 
 ## Notes
 
